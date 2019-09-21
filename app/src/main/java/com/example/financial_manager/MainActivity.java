@@ -82,6 +82,20 @@ public class MainActivity extends AppCompatActivity
 
         dbmanager.load(dataList);
         adapter.notifyDataSetChanged();
+
+        clearButton = findViewById(R.id.ID1_clearbutton);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                dbmanager.clearData();
+                dataList.clear();
+                adapter.notifyDataSetChanged();
+
+                ShowMessage("All data deleted.");
+
+            }
+        });
     }
 
     @Override
