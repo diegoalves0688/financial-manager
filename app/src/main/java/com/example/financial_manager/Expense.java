@@ -75,4 +75,8 @@ public class Expense {
         dbmanager.updateItem(this);
 
     }
+
+    public String toString() {
+        return "Id: " + this.id + " Name: " + this.name + " Category: " + this.category + " Value: " + this.value;
+    }
 }

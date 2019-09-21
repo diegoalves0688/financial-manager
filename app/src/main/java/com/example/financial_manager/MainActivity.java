@@ -22,10 +22,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private Button loadButton;
+
+    private Button clearButton;
+
+    private ListView expenseListView;
+
+    private ArrayAdapter<String> adapter;
+
+    private ArrayList<String> dataList;
 
     private DatabaseManager dbmanager;
 
@@ -51,7 +66,22 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
 
+        initializeComponents();
+    }
+
+    public void initializeComponents(){
+
         dbmanager = new DatabaseManager(this);
+
+        this.expenseListView = findViewById(R.id.ID1_expenseListView);
+        this.dataList = new ArrayList<String>();
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,dataList);
+
+        expenseListView.setAdapter(adapter);
+
+        dbmanager.load(dataList);
+        adapter.notifyDataSetChanged();
     }
 
     @Override
