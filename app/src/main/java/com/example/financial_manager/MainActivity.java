@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import android.view.View;
 
@@ -50,14 +49,16 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        FloatingActionButton fab = findViewById(R.id.fab);
+
+        FloatingActionButton fab = findViewById(R.id.ID1_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
+                startActivity(intent);
             }
         });
+
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -72,6 +73,8 @@ public class MainActivity extends AppCompatActivity
     public void initializeComponents(){
 
         dbmanager = new DatabaseManager(this);
+
+        this.expenseListView = findViewById(R.id.ID1_expenseListView);
 
         this.expenseListView = findViewById(R.id.ID1_expenseListView);
         this.dataList = new ArrayList<String>();
@@ -136,24 +139,19 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_home) {
+        if (id == R.id.nav_insert) {
 
             Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_gallery) {
+        } else if (id == R.id.nav_expense_view) {
 
-            SendMail(null, null, null);
             ShowMessage("Done");
 
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_tools) {
-
-        } else if (id == R.id.nav_share) {
+        } else if (id == R.id.nav_month_view) {
 
         } else if (id == R.id.nav_send) {
-
+            SendMail(null, null, null);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
