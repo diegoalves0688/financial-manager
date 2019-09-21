@@ -5,14 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".ResumeActivity"
-    tools:showIn="@layout/app_bar_resume">
+    tools:context=".ViewItemActivity"
+    tools:showIn="@layout/activity_view_item">
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Resume view"
-        tools:layout_editor_absoluteX="158dp"
-        tools:layout_editor_absoluteY="217dp" />
+        android:layout_marginStart="156dp"
+        android:layout_marginLeft="156dp"
+        android:layout_marginTop="296dp"
+        android:text="view item"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

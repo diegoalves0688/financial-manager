@@ -1,5 +1,6 @@
-package com.example.financialmanager;
+package com.example.financial_manager;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -21,14 +22,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
+import android.widget.Toast;
 
-public class ResumeActivity extends AppCompatActivity
+public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    private DatabaseManager dbmanager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_resume2);
+        setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         FloatingActionButton fab = findViewById(R.id.fab);
@@ -46,6 +50,8 @@ public class ResumeActivity extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
         navigationView.setNavigationItemSelectedListener(this);
+
+        dbmanager = new DatabaseManager(this);
     }
 
     @Override
@@ -61,7 +67,7 @@ public class ResumeActivity extends AppCompatActivity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.resume, menu);
+        getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
@@ -87,9 +93,14 @@ public class ResumeActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
-            Intent intent = new Intent(getBaseContext(), MainActivity.class);
+
+            Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
             startActivity(intent);
+
         } else if (id == R.id.nav_gallery) {
+
+            SendMail(null, null, null);
+            ShowMessage("Done");
 
         } else if (id == R.id.nav_slideshow) {
 
@@ -104,5 +115,35 @@ public class ResumeActivity extends AppCompatActivity
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public void ShowMessage(String message){
+
+        Context context = getApplicationContext();
+        CharSequence text = message;
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+
+    }
+
+    public void SendMail(String to, String subject, String message){
+
+        try{
+
+            Intent email = new Intent(Intent.ACTION_SEND);
+            email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
+            email.putExtra(Intent.EXTRA_SUBJECT, subject);
+            email.putExtra(Intent.EXTRA_TEXT, message);
+
+            email.setType("message/rfc822");
+
+            startActivity(email.createChooser(email, "Choose an Email client :"));
+
+        }catch (Exception ex){
+            ShowMessage("Error: " + ex.getMessage());
+        }
+
     }
 }
