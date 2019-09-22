@@ -14,7 +14,8 @@ public class Expense {
 
     private long installments;
 
-    public Expense(String name, String category, long value, String startDate, long installments){
+    public Expense(int id, String name, String category, long value, String startDate, long installments){
+        this.id = id;
         this.name = name;
         this.category = category;
         this.value = value;

@@ -1,6 +1,7 @@
 package com.example.financial_manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -10,14 +11,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class SearchActivity extends AppCompatActivity {
+
+    private EditText searchParameter;
 
     private Button clearButton;
 
@@ -45,6 +50,8 @@ public class SearchActivity extends AppCompatActivity {
     public void initiateComponents(){
         dbmanager = new DatabaseManager(this);
 
+        this.searchParameter = findViewById(R.id.ID3_searcheditText);
+
         this.expenseListView = findViewById(R.id.ID1_expenseListView);
         this.dataList = new ArrayList<String>();
 
@@ -60,11 +67,22 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                dbmanager.load(dataList);
+                String parameter = searchParameter.getText().toString();
+
+                dbmanager.search(dataList, parameter);
                 adapter.notifyDataSetChanged();
+            }
+        });
 
-                ShowMessage("Done.");
+        expenseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                int current = position + 1;
+                Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
+                intent.putExtra("itemId",String.valueOf(current));
+                startActivity(intent);
             }
         });
     }
@@ -79,5 +97,4 @@ public class SearchActivity extends AppCompatActivity {
         toast.show();
 
     }
-
 }

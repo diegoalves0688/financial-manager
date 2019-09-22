@@ -20,6 +20,7 @@
 
     <Button
         android:id="@+id/ID1_searchbutton"
+        style="@android:style/Widget.DeviceDefault.Button.Borderless"
         android:layout_width="87dp"
         android:layout_height="40dp"
         android:layout_marginStart="184dp"
@@ -30,7 +31,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/ID3_searcheditText"
         android:layout_width="136dp"
         android:layout_height="42dp"
         android:layout_marginStart="29dp"

@@ -82,7 +82,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 String startDate = cursor.getString(4);
                 int installments = cursor.getInt(5);
 
-                Expense expense = new Expense(name, category, value, startDate, installments);
+                Expense expense = new Expense(id, name, category, value, startDate, installments);
 
                 expenseList.add(expense.toString());
 
@@ -92,6 +92,126 @@ public class DatabaseManager extends SQLiteOpenHelper {
         }
 
     }
+
+    public void search(ArrayList expenseList, String parameter){
+
+        expenseList.clear();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+
+        if(parameter.equals("")){
+
+            String cols[] = new String[6];
+
+            cols[0] = "ID";
+            cols[1] = "NAME";
+            cols[2] = "CATEGORY";
+            cols[3] = "VALUE";
+            cols[4] = "STARTDATE";
+            cols[5] = "INSTALLMENTS";
+
+            cursor = db.query("EXPENSES", cols,
+                    null, null, null, null, null);
+        }
+        else {
+            String[] args = {parameter};
+
+            String sql = "SELECT * FROM EXPENSES WHERE ID = ? ORDER BY ID ASC";
+
+            cursor = db.rawQuery(sql, args);
+        }
+
+        Boolean next;
+
+        if(cursor == null){
+            return;
+        }
+        else{
+
+            next = cursor.moveToFirst();
+
+            while(next){
+
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String category = cursor.getString(2);
+                int value = cursor.getInt(3);
+                String startDate = cursor.getString(4);
+                int installments = cursor.getInt(5);
+
+                Expense expense = new Expense(id, name, category, value, startDate, installments);
+
+                expenseList.add(expense.toString());
+
+                next = cursor.moveToNext();
+
+            }
+        }
+
+    }
+
+    public ArrayList<Expense> search(String parameter){
+
+        ArrayList<Expense> expenseList = new ArrayList<Expense>();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+
+        if(parameter.equals("")){
+
+            String cols[] = new String[6];
+
+            cols[0] = "ID";
+            cols[1] = "NAME";
+            cols[2] = "CATEGORY";
+            cols[3] = "VALUE";
+            cols[4] = "STARTDATE";
+            cols[5] = "INSTALLMENTS";
+
+            cursor = db.query("EXPENSES", cols,
+                    null, null, null, null, null);
+        }
+        else {
+            String[] args = {parameter};
+
+            String sql = "SELECT * FROM EXPENSES WHERE ID = ? ORDER BY ID ASC";
+
+            cursor = db.rawQuery(sql, args);
+        }
+
+        Boolean next;
+
+        if(cursor == null){
+            return expenseList;
+        }
+        else{
+
+            next = cursor.moveToFirst();
+
+            while(next){
+
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String category = cursor.getString(2);
+                int value = cursor.getInt(3);
+                String startDate = cursor.getString(4);
+                int installments = cursor.getInt(5);
+
+                Expense expense = new Expense(id, name, category, value, startDate, installments);
+
+                expenseList.add(expense);
+
+                next = cursor.moveToNext();
+
+            }
+        }
+
+        return expenseList;
+    }
+
 
     public void updateItem(Expense expense){
 
