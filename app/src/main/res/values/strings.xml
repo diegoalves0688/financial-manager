@@ -12,4 +12,5 @@
     <string name="menu_expense_search">Search expense</string>
     <string name="menu_send">Send by email</string>
     <string name="title_activity_view_item">New expense</string>
+    <string name="title_activity_search">SearchActivity</string>
 </resources>

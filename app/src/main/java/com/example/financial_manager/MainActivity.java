@@ -82,63 +82,47 @@ public class MainActivity extends AppCompatActivity
 
     public void initializeComponents(){
 
-        dbmanager = new DatabaseManager(this);
-
-        this.expenseListView = findViewById(R.id.ID1_expenseListView);
-
-        this.expenseListView = findViewById(R.id.ID1_expenseListView);
-        this.dataList = new ArrayList<String>();
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_expandable_list_item_1,dataList);
-
-        expenseListView.setAdapter(adapter);
-
-        dbmanager.load(dataList);
-        adapter.notifyDataSetChanged();
-
-        clearButton = findViewById(R.id.ID1_clearbutton);
-        clearButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                //dbmanager.clearData();
-                //dataList.clear();
-                //adapter.notifyDataSetChanged();
-
-                initiateChart("new data");
-
-                ShowMessage("All data deleted.");
-
-            }
-        });
 
         initiateChart("start");
 
+    }
 
+    public String[] getXaxisChartData(){
+
+        String[] xAxisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
+                "Oct", "Nov", "Dec"};
+
+        return xAxisData;
+    }
+
+    public int[] getYaxisChartData(){
+        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+
+        return yAxisData;
     }
 
     // Chart lib reference: https://github.com/lecho/hellocharts-android
     //
-    // Thank you to Sveta post in Mobindustry: 
+    // Thank you to Sveta post in Mobindustry:
     // https://www.mobindustry.net/how-to-quickly-implement-beautiful-charts-in-your-android-app/
 
     public void initiateChart(String title){
 
         LineChartView lineChartView;
-        String[] axisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
-                "Oct", "Nov", "Dec"};
-        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+
+        String[] xAxisData = getXaxisChartData();
+        int[] yAxisData = getYaxisChartData();
 
         lineChartView = findViewById(R.id.chart);
 
         List yAxisValues = new ArrayList();
-        List axisValues = new ArrayList();
+        List xAxisValues = new ArrayList();
 
 
         Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
 
-        for (int i = 0; i < axisData.length; i++) {
-            axisValues.add(i, new AxisValue(i).setLabel(axisData[i]));
+        for (int i = 0; i < xAxisData.length; i++) {
+            xAxisValues.add(i, new AxisValue(i).setLabel(xAxisData[i]));
         }
 
         for (int i = 0; i < yAxisData.length; i++) {
@@ -151,11 +135,11 @@ public class MainActivity extends AppCompatActivity
         LineChartData data = new LineChartData();
         data.setLines(lines);
 
-        Axis axis = new Axis();
-        axis.setValues(axisValues);
-        axis.setTextSize(16);
-        axis.setTextColor(Color.parseColor("#03A9F4"));
-        data.setAxisXBottom(axis);
+        Axis xAxis = new Axis();
+        xAxis.setValues(xAxisValues);
+        xAxis.setTextSize(16);
+        xAxis.setTextColor(Color.parseColor("#03A9F4"));
+        data.setAxisXBottom(xAxis);
 
         Axis yAxis = new Axis();
         yAxis.setName(title);
@@ -196,7 +180,16 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.ID1_action_settings) {
+            return true;
+        }
+
+        if (id == R.id.ID1_erase_data) {
+
+            dbmanager = new DatabaseManager(this);
+            dbmanager.clearData();
+
+            ShowMessage("All data deleted.");
             return true;
         }
 
@@ -216,7 +209,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_expense_view) {
 
-            ShowMessage("Done");
+            Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+            startActivity(intent);
 
         } else if (id == R.id.nav_month_view) {
 

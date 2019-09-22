@@ -1,6 +1,7 @@
 package com.example.financial_manager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -68,6 +69,10 @@ public class ViewItemActivity extends AppCompatActivity {
                 dbmanager.insert(expense);
 
                 ShowMessage("Expense inserted: " + name);
+
+                Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+                startActivity(intent);
+
             }
         });
 
