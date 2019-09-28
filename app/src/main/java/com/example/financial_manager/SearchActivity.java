@@ -140,10 +140,18 @@ public class SearchActivity extends AppCompatActivity {
             String content = "Your report is ready! See more details below:";
             content = content + "\n\n";
 
+            content = content + "Searched parameter: " + searchedParam.getText().toString();
+
+            content = content + "\n\n";
+
             for(String item : contentList){
                 content = content + item;
                 content = content + "\n";
             }
+
+            content = content + "\n\n";
+
+            content = content + "Total: " + expensesTotal.getText().toString();
 
             Intent email = new Intent(Intent.ACTION_SEND);
             email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
