@@ -3,12 +3,15 @@ package com.example.financial_manager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
+import android.icu.text.SimpleDateFormat;
+import android.os.Build;
 import android.os.Bundle;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.View;
 
+import androidx.annotation.RequiresApi;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -28,7 +31,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -60,6 +65,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        dbmanager = new DatabaseManager(this);
+
         FloatingActionButton fab = findViewById(R.id.ID1_fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,20 +90,67 @@ public class MainActivity extends AppCompatActivity
     public void initializeComponents(){
 
 
-        initiateChart("start");
+        initiateNext3MonthsChart("");
 
     }
 
     public String[] getXaxisChartData(){
 
-        String[] xAxisData = {"Jan", "Feb", "Mar", "Apr", "May", "June", "July", "Aug", "Sept",
-                "Oct", "Nov", "Dec"};
+        String[] xAxisData = {"Sept", "Oct", "Nov", "Dec"};
 
         return xAxisData;
     }
 
+    public String getMonth(String monthdigit){
+        if(monthdigit.equals("01") || monthdigit.equals("Jan"))
+            return "January";
+        if(monthdigit.equals("02") || monthdigit.equals("Feb"))
+            return "february";
+        if(monthdigit.equals("03") || monthdigit.equals("Mar"))
+            return "march";
+        if(monthdigit.equals("04") || monthdigit.equals("Apr"))
+            return "april";
+        if(monthdigit.equals("05") || monthdigit.equals("May"))
+            return "may";
+        if(monthdigit.equals("06") || monthdigit.equals("Jun"))
+            return "june";
+        if(monthdigit.equals("07") || monthdigit.equals("July"))
+            return "july";
+        if(monthdigit.equals("08") || monthdigit.equals("Aug"))
+            return "august";
+        if(monthdigit.equals("09") || monthdigit.equals("Sept"))
+            return "september";
+        if(monthdigit.equals("10") || monthdigit.equals("Oct"))
+            return "october";
+        if(monthdigit.equals("11") || monthdigit.equals("Nov"))
+            return "november";
+        if(monthdigit.equals("12") || monthdigit.equals("Dec"))
+            return "december";
+
+        return "";
+    }
+
     public int[] getYaxisChartData(){
-        int[] yAxisData = {50, 20, 15, 30, 20, 60, 15, 40, 45, 10, 90, 18};
+
+        int[] yAxisData = new int[4];
+
+        dbmanager = new DatabaseManager(this);
+
+        String[] months = getXaxisChartData();
+
+        int index = 0;
+
+        for(String month: months){
+
+            String monthParsed = getMonth(month);
+
+            int total = (int)dbmanager.searchByMonth(monthParsed);
+
+            yAxisData[index] = total;
+
+            index++;
+        }
+
 
         return yAxisData;
     }
@@ -154,6 +208,56 @@ public class MainActivity extends AppCompatActivity
         lineChartView.setCurrentViewport(viewport);
 
     }
+
+    public void initiateNext3MonthsChart(String title){
+
+        LineChartView lineChartView;
+
+        String[] xAxisData = getXaxisChartData();
+        int[] yAxisData = getYaxisChartData();
+
+        lineChartView = findViewById(R.id.chart);
+
+        List yAxisValues = new ArrayList();
+        List xAxisValues = new ArrayList();
+
+
+        Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
+
+        for (int i = 0; i < xAxisData.length; i++) {
+            xAxisValues.add(i, new AxisValue(i).setLabel(xAxisData[i]));
+        }
+
+        for (int i = 0; i < yAxisData.length; i++) {
+            yAxisValues.add(new PointValue(i, yAxisData[i]));
+        }
+
+        List lines = new ArrayList();
+        lines.add(line);
+
+        LineChartData data = new LineChartData();
+        data.setLines(lines);
+
+        Axis xAxis = new Axis();
+        xAxis.setValues(xAxisValues);
+        xAxis.setTextSize(16);
+        xAxis.setTextColor(Color.parseColor("#03A9F4"));
+        data.setAxisXBottom(xAxis);
+
+        Axis yAxis = new Axis();
+        yAxis.setName(title);
+        yAxis.setTextColor(Color.parseColor("#03A9F4"));
+        yAxis.setTextSize(16);
+        data.setAxisYLeft(yAxis);
+
+        lineChartView.setLineChartData(data);
+        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
+        viewport.top = 110;
+        lineChartView.setMaximumViewport(viewport);
+        lineChartView.setCurrentViewport(viewport);
+
+    }
+
 
     @Override
     public void onBackPressed() {
@@ -213,7 +317,8 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
 
         } else if (id == R.id.nav_month_view) {
-
+            Intent intent = new Intent(getBaseContext(), MonthViewActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_send) {
             ShowMessage("send by email");
         }

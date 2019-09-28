@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="16dp"
-        android:text="Expense history:"
+        android:text="Expenses next 3 months"
         android:textColor="#0288D1"
         android:textSize="14sp"
         app:layout_constraintLeft_toLeftOf="parent"
