@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ public class SearchActivity extends AppCompatActivity {
 
     private EditText searchParameter;
 
-    private Button clearButton;
+    private Button searchButton;
 
     private ListView expenseListView;
 
@@ -62,8 +63,8 @@ public class SearchActivity extends AppCompatActivity {
         dbmanager.load(dataList);
         adapter.notifyDataSetChanged();
 
-        clearButton = findViewById(R.id.ID1_searchbutton);
-        clearButton.setOnClickListener(new View.OnClickListener() {
+        searchButton = findViewById(R.id.ID1_searchbutton);
+        searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -80,8 +81,16 @@ public class SearchActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                 int current = position + 1;
+
+                String selectedItemContent = (String) expenseListView.getItemAtPosition(position);
+                String[] itemArr = selectedItemContent.split("-");
+                String elementContent = itemArr[0];
+                elementContent = elementContent
+                                .replace("Id:", "")
+                                .replace(" ", "");
+
                 Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
-                intent.putExtra("itemId",String.valueOf(current));
+                intent.putExtra("itemId", elementContent);
                 startActivity(intent);
             }
         });

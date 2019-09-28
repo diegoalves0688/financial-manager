@@ -19,8 +19,6 @@ import java.util.ArrayList;
 
 public class ViewItemActivity extends AppCompatActivity {
 
-    private String name;
-
     private EditText nameEdtiText;
 
     private EditText categoryEdtiText;
@@ -109,7 +107,7 @@ public class ViewItemActivity extends AppCompatActivity {
         String itemId = intent.getStringExtra("itemId");
         if(itemId!= null && !itemId.equals("")){
 
-            ArrayList<Expense> resultList = dbmanager.search(itemId);
+            ArrayList<Expense> resultList = dbmanager.search("ID", itemId);
 
             for (Expense element: resultList) {
                 this.nameEdtiText.setText(element.getName());
@@ -117,6 +115,9 @@ public class ViewItemActivity extends AppCompatActivity {
                 this.valueEdtiText.setText(String.valueOf(element.getValue()));
                 this.startDateEdtiText.setText(element.getStartDate());
                 this.installmentsEdtiText.setText(String.valueOf(element.getInstallments()));
+                this.installmentEdtiText.setText(String.valueOf(element.getInstallment()));
+                this.monthEdtiText.setText(String.valueOf(element.getMonth()));
+                this.yearEdtiText.setText(String.valueOf(element.getYear()));
             }
 
         }

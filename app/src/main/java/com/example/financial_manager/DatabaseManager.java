@@ -144,7 +144,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         else {
             String[] args = {parameter};
 
-            String sql = "SELECT * FROM EXPENSES WHERE ID = ? ORDER BY ID ASC";
+            String sql = "SELECT * FROM EXPENSES WHERE NAME = ? ORDER BY ID ASC";
 
             cursor = db.rawQuery(sql, args);
         }
@@ -182,7 +182,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-    public ArrayList<Expense> search(String parameter){
+    public ArrayList<Expense> search(String col, String parameter){
 
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
 
@@ -208,11 +208,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
                     null, null, null, null, null);
         }
         else {
-            String[] args = {parameter};
+            String[] args = {col, parameter};
 
-            String sql = "SELECT * FROM EXPENSES WHERE ID = ? ORDER BY ID ASC";
+            String sql = "SELECT * FROM EXPENSES WHERE " + col +
+                    " = " + parameter + " ORDER BY ID ASC";
 
-            cursor = db.rawQuery(sql, args);
+            cursor = db.rawQuery(sql,null);
         }
 
         Boolean next;
