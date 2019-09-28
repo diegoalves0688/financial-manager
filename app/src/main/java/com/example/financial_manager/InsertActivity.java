@@ -73,18 +73,31 @@ public class InsertActivity extends AppCompatActivity {
                 int installments = Integer.parseInt(installmentsValue);
 
                 String month = getDate("month");
+                long monthLong = Long.valueOf(month);
                 String year = getDate("year");
+                long yearLong = Long.valueOf(year);
+
+                long installmentIndex = 1;
 
                 for(int i = 1; i <= installments; i++){
+
+                    if((monthLong + (installmentIndex - 1)) == 13){
+                        installmentIndex = 1;
+                        monthLong = 1;
+                        yearLong++;
+                    }
 
                     Expense expense = new Expense(0, name,
                             category, Long.valueOf(value),
                             startDate, Long.valueOf(installments),
                             i,
-                            Long.valueOf(month),
-                            Long.valueOf(year));
+                            monthLong + (installmentIndex - 1),
+                            yearLong);
 
                     dbmanager.insert(expense);
+
+                    installmentIndex++;
+
                 }
 
                 ShowMessage("Expense inserted: " + name);

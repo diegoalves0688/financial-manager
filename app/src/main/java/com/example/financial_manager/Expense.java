@@ -88,7 +88,12 @@ public class Expense {
     }
 
     public String toString() {
-        return "Id: " + this.id + " Name: " + this.name + " Category: " + this.category + " Value: " + this.value;
+        return "Id: " + this.id +
+                " Name: " + this.name +
+                " Category: " + this.category +
+                " Installment: " + this.installment + "/" + this.installments +
+                " Settle: " + this.month + "/" + this.year +
+                " Value: " + this.value;
     }
 
     public long getInstallment() {

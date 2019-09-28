@@ -53,11 +53,11 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         register.put("INSTALLMENTS", expense.getInstallments());
 
-        register.put("INSTALLMENT", expense.getInstallments());
+        register.put("INSTALLMENT", expense.getInstallment());
 
-        register.put("MONTH", expense.getInstallments());
+        register.put("MONTH", expense.getMonth());
 
-        register.put("YEAR", expense.getInstallments());
+        register.put("YEAR", expense.getYear());
 
         db.insert("EXPENSES", null, register);
 
