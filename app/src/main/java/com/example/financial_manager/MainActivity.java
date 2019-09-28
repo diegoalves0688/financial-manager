@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_month_view) {
 
         } else if (id == R.id.nav_send) {
-            SendMail(null, null, null);
+            ShowMessage("send by email");
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
@@ -234,22 +234,5 @@ public class MainActivity extends AppCompatActivity
 
     }
 
-    public void SendMail(String to, String subject, String message){
 
-        try{
-
-            Intent email = new Intent(Intent.ACTION_SEND);
-            email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
-            email.putExtra(Intent.EXTRA_SUBJECT, subject);
-            email.putExtra(Intent.EXTRA_TEXT, message);
-
-            email.setType("message/rfc822");
-
-            startActivity(email.createChooser(email, "Choose an Email client :"));
-
-        }catch (Exception ex){
-            ShowMessage("Error: " + ex.getMessage());
-        }
-
-    }
 }

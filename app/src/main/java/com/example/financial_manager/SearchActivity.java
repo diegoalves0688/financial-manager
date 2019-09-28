@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,12 @@ public class SearchActivity extends AppCompatActivity {
     private EditText searchParameter;
 
     private Button searchButton;
+
+    private Long total;
+
+    private TextView expensesTotal;
+
+    private TextView searchedParam;
 
     private ListView expenseListView;
 
@@ -51,6 +58,12 @@ public class SearchActivity extends AppCompatActivity {
     public void initiateComponents(){
         dbmanager = new DatabaseManager(this);
 
+        total = new Long(0);
+
+        this.expensesTotal = findViewById(R.id.ID1_totalSearchtextView16);
+
+        this.searchedParam = findViewById(R.id.ID1_searchedParamtextView18);
+
         this.searchParameter = findViewById(R.id.ID3_searcheditText);
 
         this.expenseListView = findViewById(R.id.ID1_expenseListView);
@@ -60,20 +73,44 @@ public class SearchActivity extends AppCompatActivity {
 
         expenseListView.setAdapter(adapter);
 
-        dbmanager.load(dataList);
+        total = dbmanager.load(dataList);
         adapter.notifyDataSetChanged();
 
-        searchButton = findViewById(R.id.ID1_searchbutton);
+        expensesTotal.setText(String.valueOf(total));
+
+        FloatingActionButton emailButton = findViewById(R.id.ID1_EmailfloatingActionButton);
+        emailButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                SendMail(null, null, null);
+
+            }
+        });
+
+        FloatingActionButton searchButton = findViewById(R.id.ID1_searchfloatingActionButton2);
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
                 String parameter = searchParameter.getText().toString();
 
-                dbmanager.search(dataList, parameter);
+                total = dbmanager.search(dataList, parameter);
                 adapter.notifyDataSetChanged();
+
+                if(dataList.size() < 1){
+                    total = dbmanager.searchByMonth(dataList, parameter);
+                    adapter.notifyDataSetChanged();
+                }
+
+                searchedParam.setText(parameter.equals("") ? "all expenses" : parameter);
+
+                expensesTotal.setText(String.valueOf(total));
+
             }
         });
+
+
 
         expenseListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
@@ -94,6 +131,25 @@ public class SearchActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    public void SendMail(String to, String subject, String message){
+
+        try{
+
+            Intent email = new Intent(Intent.ACTION_SEND);
+            email.putExtra(Intent.EXTRA_EMAIL, new String[]{ to});
+            email.putExtra(Intent.EXTRA_SUBJECT, subject);
+            email.putExtra(Intent.EXTRA_TEXT, message);
+
+            email.setType("message/rfc822");
+
+            startActivity(email.createChooser(email, "Choose an Email client :"));
+
+        }catch (Exception ex){
+            ShowMessage("Error: " + ex.getMessage());
+        }
+
     }
 
     public void ShowMessage(String message){

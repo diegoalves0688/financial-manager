@@ -63,7 +63,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-    public void load(ArrayList expenseList){
+    public long load(ArrayList expenseList){
+
+        long total = 0;
 
         expenseList.clear();
 
@@ -87,7 +89,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Boolean next;
 
         if(cursor == null){
-            return;
+            return 0;
         }else{
 
             next = cursor.moveToFirst();
@@ -107,6 +109,8 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 Expense expense = new Expense(id, name, category, value, startDate,
                         installments, installment, month, year);
 
+                total = total + value;
+
                 expenseList.add(expense.toString());
 
                 next = cursor.moveToNext();
@@ -114,9 +118,13 @@ public class DatabaseManager extends SQLiteOpenHelper {
             }
         }
 
+        return total;
+
     }
 
-    public void search(ArrayList expenseList, String parameter){
+    public long search(ArrayList expenseList, String parameter){
+
+        long total = 0;
 
         expenseList.clear();
 
@@ -152,7 +160,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
         Boolean next;
 
         if(cursor == null){
-            return;
+            return 0;
         }
         else{
 
@@ -173,12 +181,71 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 Expense expense = new Expense(id, name, category, value, startDate,
                         installments, installment, month, year);
 
+                total = total + value;
+
                 expenseList.add(expense.toString());
 
                 next = cursor.moveToNext();
 
             }
         }
+
+        return total;
+
+    }
+
+    public long searchByMonth(ArrayList expenseList, String monthParam){
+
+        long total = 0;
+
+        long param = parseMonth(monthParam);
+
+        expenseList.clear();
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor;
+
+        String[] args = {String.valueOf(param)};
+
+        String sql = "SELECT * FROM EXPENSES WHERE MONTH = ? ORDER BY ID ASC";
+
+        cursor = db.rawQuery(sql, args);
+
+        Boolean next;
+
+        if(cursor == null){
+            return 0;
+        }
+        else{
+
+            next = cursor.moveToFirst();
+
+            while(next){
+
+                int id = cursor.getInt(0);
+                String name = cursor.getString(1);
+                String category = cursor.getString(2);
+                int value = cursor.getInt(3);
+                String startDate = cursor.getString(4);
+                int installments = cursor.getInt(5);
+                int installment = cursor.getInt(6);
+                int month = cursor.getInt(7);
+                int year = cursor.getInt(8);
+
+                Expense expense = new Expense(id, name, category, value, startDate,
+                        installments, installment, month, year);
+
+                total = total + value;
+
+                expenseList.add(expense.toString());
+
+                next = cursor.moveToNext();
+
+            }
+        }
+
+        return total;
 
     }
 
@@ -278,5 +345,36 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         db.execSQL(sql);
 
+    }
+
+    public long parseMonth(String month){
+
+        month = month.toLowerCase();
+
+        if(month.equals("january"))
+            return 1;
+        else if(month.equals("february"))
+            return 2;
+        else if(month.equals("march"))
+            return 3;
+        else if(month.equals("april"))
+            return 4;
+        else if(month.equals("may"))
+            return 5;
+        else if(month.equals("june"))
+            return 6;
+        else if(month.equals("july"))
+            return 7;
+        else if(month.equals("august"))
+            return 8;
+        else if(month.equals("september"))
+            return 9;
+        else if(month.equals("october"))
+            return 10;
+        else if(month.equals("november"))
+            return 11;
+        else if(month.equals("december"))
+            return 12;
+        return 0;
     }
 }

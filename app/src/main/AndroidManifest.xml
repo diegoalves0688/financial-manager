@@ -30,11 +30,11 @@
         <activity
             android:name=".ViewItemActivity"
             android:label="@string/title_activity_view_item"
-            android:parentActivityName=".MainActivity"
+            android:parentActivityName=".SearchActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.financial_manager.MainActivity" />
+                android:value="com.example.financial_manager.SearchActivity" />
         </activity>
         <activity
             android:name=".MainActivity"
