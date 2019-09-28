@@ -31,6 +31,12 @@ public class ViewItemActivity extends AppCompatActivity {
 
     private EditText installmentsEdtiText;
 
+    private EditText installmentEdtiText;
+
+    private EditText monthEdtiText;
+
+    private EditText yearEdtiText;
+
     private Button insertButton;
 
     private DatabaseManager dbmanager;
@@ -57,6 +63,9 @@ public class ViewItemActivity extends AppCompatActivity {
         this.valueEdtiText = findViewById(R.id.ID2_valueeditText3);
         this.startDateEdtiText = findViewById(R.id.ID2_startDateeditText4);
         this.installmentsEdtiText = findViewById(R.id.ID2_installmentseditText5);
+        this.installmentEdtiText = findViewById(R.id.ID2_installmenteditText);
+        this.monthEdtiText = findViewById(R.id.ID2_montheditText2);
+        this.yearEdtiText = findViewById(R.id.ID2_yeareditText3);
 
         this.insertButton = findViewById(R.id.ID2_insertbutton);
 
@@ -72,8 +81,16 @@ public class ViewItemActivity extends AppCompatActivity {
                 String value = valueEdtiText.getText().toString();
                 String startDate = startDateEdtiText.getText().toString();
                 String installments = installmentsEdtiText.getText().toString();
+                String installment = installmentEdtiText.getText().toString();
+                String month = monthEdtiText.getText().toString();
+                String year = yearEdtiText.getText().toString();
 
-                Expense expense = new Expense(0, name, category, Long.valueOf(value), startDate, Long.valueOf(installments));
+                Expense expense = new Expense(0, name,
+                        category, Long.valueOf(value),
+                        startDate, Long.valueOf(installments),
+                        Long.valueOf(installment),
+                        Long.valueOf(month),
+                        Long.valueOf(year));
 
                 dbmanager.insert(expense);
 

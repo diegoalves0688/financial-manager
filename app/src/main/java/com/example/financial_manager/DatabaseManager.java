@@ -17,7 +17,17 @@ public class DatabaseManager extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        String sql = "CREATE TABLE EXPENSES(ID INTEGER PRIMARY KEY,NAME TEXT, CATEGORY TEXT, VALUE INTEGER, STARTDATE TEXT, INSTALLMENTS INTEGER)";
+        String sql = "CREATE TABLE EXPENSES(" +
+                "ID INTEGER PRIMARY KEY, " +
+                " NAME TEXT, "+
+                " CATEGORY TEXT,"+
+                " VALUE INTEGER,"+
+                " STARTDATE TEXT,"+
+                " INSTALLMENTS INTEGER,"+
+                " INSTALLMENT INTEGER,"+
+                " MONTH INTEGER,"+
+                " YEAR INTEGER"+
+                ")";
         db.execSQL(sql);
 
     }
@@ -43,6 +53,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         register.put("INSTALLMENTS", expense.getInstallments());
 
+        register.put("INSTALLMENT", expense.getInstallments());
+
+        register.put("MONTH", expense.getInstallments());
+
+        register.put("YEAR", expense.getInstallments());
+
         db.insert("EXPENSES", null, register);
 
     }
@@ -53,7 +69,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
 
-        String cols[] = new String[6];
+        String cols[] = new String[9];
 
         cols[0] = "ID";
         cols[1] = "NAME";
@@ -61,6 +77,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         cols[3] = "VALUE";
         cols[4] = "STARTDATE";
         cols[5] = "INSTALLMENTS";
+        cols[6] = "INSTALLMENT";
+        cols[7] = "MONTH";
+        cols[8] = "YEAR";
 
         Cursor cursor = db.query("EXPENSES", cols,
                 null, null, null, null, null);
@@ -81,8 +100,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 int value = cursor.getInt(3);
                 String startDate = cursor.getString(4);
                 int installments = cursor.getInt(5);
+                int installment = cursor.getInt(6);
+                int month = cursor.getInt(7);
+                int year = cursor.getInt(8);
 
-                Expense expense = new Expense(id, name, category, value, startDate, installments);
+                Expense expense = new Expense(id, name, category, value, startDate,
+                        installments, installment, month, year);
 
                 expenseList.add(expense.toString());
 
@@ -103,7 +126,7 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
         if(parameter.equals("")){
 
-            String cols[] = new String[6];
+            String cols[] = new String[9];
 
             cols[0] = "ID";
             cols[1] = "NAME";
@@ -111,6 +134,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
             cols[3] = "VALUE";
             cols[4] = "STARTDATE";
             cols[5] = "INSTALLMENTS";
+            cols[6] = "INSTALLMENT";
+            cols[7] = "MONTH";
+            cols[8] = "YEAR";
 
             cursor = db.query("EXPENSES", cols,
                     null, null, null, null, null);
@@ -140,8 +166,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 int value = cursor.getInt(3);
                 String startDate = cursor.getString(4);
                 int installments = cursor.getInt(5);
+                int installment = cursor.getInt(6);
+                int month = cursor.getInt(7);
+                int year = cursor.getInt(8);
 
-                Expense expense = new Expense(id, name, category, value, startDate, installments);
+                Expense expense = new Expense(id, name, category, value, startDate,
+                        installments, installment, month, year);
 
                 expenseList.add(expense.toString());
 
@@ -170,6 +200,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
             cols[3] = "VALUE";
             cols[4] = "STARTDATE";
             cols[5] = "INSTALLMENTS";
+            cols[6] = "INSTALLMENT";
+            cols[7] = "MONTH";
+            cols[8] = "YEAR";
 
             cursor = db.query("EXPENSES", cols,
                     null, null, null, null, null);
@@ -199,8 +232,12 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 int value = cursor.getInt(3);
                 String startDate = cursor.getString(4);
                 int installments = cursor.getInt(5);
+                int installment = cursor.getInt(6);
+                int month = cursor.getInt(7);
+                int year = cursor.getInt(8);
 
-                Expense expense = new Expense(id, name, category, value, startDate, installments);
+                Expense expense = new Expense(id, name, category, value, startDate,
+                        installments, installment, month, year);
 
                 expenseList.add(expense);
 
@@ -212,18 +249,21 @@ public class DatabaseManager extends SQLiteOpenHelper {
         return expenseList;
     }
 
-
     public void updateItem(Expense expense){
 
         SQLiteDatabase db = getWritableDatabase();
 
-        String sql = "UPDATE EXPENSES SET";
-        sql.concat(" NAME = " + expense.getName());
-        sql.concat(", CATEGORY = " + expense.getCategory());
-        sql.concat(", VALUE = " + expense.getValue());
-        sql.concat(", STARTDATE = " + expense.getStartDate());
-        sql.concat(", INSTALLMENTS = " + expense.getInstallments());
-        sql.concat(" WHERE ID = " + expense.getId());
+        String sql =
+                "UPDATE EXPENSES SET" +
+                " NAME = " + expense.getName() +
+                ", CATEGORY = " + expense.getCategory() +
+                ", VALUE = " + expense.getValue() +
+                ", STARTDATE = " + expense.getStartDate() +
+                ", INSTALLMENTS = " + expense.getInstallments() +
+                ", INSTALLMENT = " + expense.getInstallment() +
+                ", MONTH = " + expense.getMonth() +
+                ", YEAR = " + expense.getYear() +
+                " WHERE ID = " + expense.getId();
 
         db.execSQL(sql);
 

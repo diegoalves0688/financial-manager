@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">Financial Manager</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
+    <string name="navigation_drawer_open">Open navigation</string>
+    <string name="navigation_drawer_close">Close navigation</string>
+    <string name="nav_header_title">Financial Manager</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_about">About</string>
@@ -11,6 +11,7 @@
     <string name="menu_month_view">Month View</string>
     <string name="menu_expense_search">Search expense</string>
     <string name="menu_send">Send by email</string>
-    <string name="title_activity_view_item">New expense</string>
-    <string name="title_activity_search">SearchActivity</string>
+    <string name="title_activity_view_item">Edit Expense</string>
+    <string name="title_activity_search">Search Expense</string>
+    <string name="title_activity_insert">Insert Expense</string>
 </resources>

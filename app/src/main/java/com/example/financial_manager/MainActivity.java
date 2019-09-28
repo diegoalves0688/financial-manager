@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
+                Intent intent = new Intent(getBaseContext(), InsertActivity.class);
                 startActivity(intent);
             }
         });
@@ -204,7 +204,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_insert) {
 
-            Intent intent = new Intent(getBaseContext(), ViewItemActivity.class);
+            Intent intent = new Intent(getBaseContext(), InsertActivity.class);
             startActivity(intent);
 
         } else if (id == R.id.nav_expense_view) {
