@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.Date;
 import java.util.Locale;
 
@@ -57,9 +59,9 @@ public class InsertActivity extends AppCompatActivity {
         this.valueEdtiText = findViewById(R.id.ID4_valueeditText3);
         this.installmentsEdtiText = findViewById(R.id.ID4_installmentseditText4);
         this.startDateEdtiText = findViewById(R.id.ID4_startDateeditText);
-        this.insertButton = findViewById(R.id.ID4_button);
 
-        insertButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton saveButton = findViewById(R.id.ID4_savefloatingActionButton);
+        saveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
