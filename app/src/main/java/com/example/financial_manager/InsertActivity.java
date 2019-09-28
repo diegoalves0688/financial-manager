@@ -26,7 +26,7 @@ public class InsertActivity extends AppCompatActivity {
 
     private EditText valueEdtiText;
 
-    private String startDate;
+    private EditText startDateEdtiText;
 
     private EditText installmentsEdtiText;
 
@@ -44,7 +44,6 @@ public class InsertActivity extends AppCompatActivity {
 
         initializeComponents();
 
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
@@ -57,6 +56,7 @@ public class InsertActivity extends AppCompatActivity {
         this.categoryEdtiText = findViewById(R.id.ID4_categoryeditText2);
         this.valueEdtiText = findViewById(R.id.ID4_valueeditText3);
         this.installmentsEdtiText = findViewById(R.id.ID4_installmentseditText4);
+        this.startDateEdtiText = findViewById(R.id.ID4_startDateeditText);
         this.insertButton = findViewById(R.id.ID4_button);
 
         insertButton.setOnClickListener(new View.OnClickListener() {
@@ -67,14 +67,16 @@ public class InsertActivity extends AppCompatActivity {
                 String name = nameEdtiText.getText().toString();
                 String category = categoryEdtiText.getText().toString();
                 String value = valueEdtiText.getText().toString();
-                String startDate = getDate("");
+                String startDate = startDateEdtiText.getText().toString();
+
+                //getDate("");
 
                 String installmentsValue = installmentsEdtiText.getText().toString();
                 int installments = Integer.parseInt(installmentsValue);
 
-                String month = getDate("month");
+                String month = getDate(startDate,"month");
                 long monthLong = Long.valueOf(month);
-                String year = getDate("year");
+                String year = getDate(startDate,"year");
                 long yearLong = Long.valueOf(year);
 
                 long installmentIndex = 1;
@@ -110,10 +112,10 @@ public class InsertActivity extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
-    public String getDate(String param){
+    public String getDate(String currentDate, String param){
 
-        String currentDate =
-                new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        //String currentDate =
+        //        new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         String[] arrOfStr = currentDate.split("-");
 

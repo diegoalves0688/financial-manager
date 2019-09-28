@@ -319,8 +319,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_month_view) {
             Intent intent = new Intent(getBaseContext(), MonthViewActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_send) {
-            ShowMessage("send by email");
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
