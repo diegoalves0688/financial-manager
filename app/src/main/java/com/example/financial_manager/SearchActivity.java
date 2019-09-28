@@ -83,7 +83,7 @@ public class SearchActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                SendMail(dataList,null, null, null);
+                SendMail(dataList,null, null);
 
             }
         });
@@ -133,16 +133,16 @@ public class SearchActivity extends AppCompatActivity {
         });
     }
 
-    public void SendMail(ArrayList<String> contentList, String to, String subject, String message){
+    public void SendMail(ArrayList<String> contentList, String to, String subject){
 
         try{
 
             String content = "Your report is ready! See more details below:";
-            content.concat("\n\n");
+            content = content + "\n\n";
 
             for(String item : contentList){
-                content.concat(item);
-                content.concat("\n");
+                content = content + item;
+                content = content + "\n";
             }
 
             Intent email = new Intent(Intent.ACTION_SEND);
