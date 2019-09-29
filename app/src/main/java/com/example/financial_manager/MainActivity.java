@@ -28,6 +28,7 @@ import android.view.Menu;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -49,6 +50,8 @@ public class MainActivity extends AppCompatActivity
     private Button loadButton;
 
     private Button clearButton;
+
+    private TextView totalTextView;
 
     private ListView expenseListView;
 
@@ -132,6 +135,10 @@ public class MainActivity extends AppCompatActivity
 
     public int[] getYaxisChartData(){
 
+        long threeMonthTotal = 0;
+
+        this.totalTextView = findViewById(R.id.ID1_totalValuetextView20);
+
         int[] yAxisData = new int[4];
 
         dbmanager = new DatabaseManager(this);
@@ -148,9 +155,12 @@ public class MainActivity extends AppCompatActivity
 
             yAxisData[index] = total;
 
+            threeMonthTotal = threeMonthTotal + total;
+
             index++;
         }
 
+        totalTextView.setText(String.valueOf(threeMonthTotal));
 
         return yAxisData;
     }
@@ -316,9 +326,6 @@ public class MainActivity extends AppCompatActivity
             Intent intent = new Intent(getBaseContext(), SearchActivity.class);
             startActivity(intent);
 
-        } else if (id == R.id.nav_month_view) {
-            Intent intent = new Intent(getBaseContext(), MonthViewActivity.class);
-            startActivity(intent);
         }
 
         DrawerLayout drawer = findViewById(R.id.drawer_layout);

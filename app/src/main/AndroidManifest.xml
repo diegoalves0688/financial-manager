@@ -10,15 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MonthViewActivity"
-            android:label="@string/title_activity_month_view"
-            android:parentActivityName=".MainActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.financial_manager.MainActivity" />
-        </activity>
-        <activity
             android:name=".InsertActivity"
             android:label="@string/title_activity_insert"
             android:parentActivityName=".MainActivity"
