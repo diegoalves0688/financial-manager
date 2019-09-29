@@ -45,32 +45,16 @@ public class Expense {
         return category;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
-
     public long getValue() {
         return value;
-    }
-
-    public void setValue(long value) {
-        this.value = value;
     }
 
     public String getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
-        this.startDate = startDate;
-    }
-
     public long getInstallments() {
         return installments;
-    }
-
-    public void setInstallments(long installments) {
-        this.installments = installments;
     }
 
     public int getId() {
@@ -81,42 +65,27 @@ public class Expense {
         this.id = id;
     }
 
-    public void save(DatabaseManager dbmanager){
-
-        dbmanager.updateItem(this);
-
-    }
-
     public String toString() {
         return "Id:" + this.id +
                 " - Name: " + this.name +
-                " Category: " + this.category +
+                "\n" +
+                //" Category: " + this.category +
                 " Installment: " + this.installment + "/" + this.installments +
+                "\n" +
                 " Settle: " + this.month + "/" + this.year +
-                " Value: " + this.value;
+                " $" + this.value;
     }
 
     public long getInstallment() {
         return installment;
     }
 
-    public void setInstallment(long installment) {
-        this.installment = installment;
-    }
-
     public long getMonth() {
         return month;
-    }
-
-    public void setMonth(long month) {
-        this.month = month;
     }
 
     public long getYear() {
         return year;
     }
 
-    public void setYear(long year) {
-        this.year = year;
-    }
 }

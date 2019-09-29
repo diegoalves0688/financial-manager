@@ -11,7 +11,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.View;
 
-import androidx.annotation.RequiresApi;
 import androidx.core.view.GravityCompat;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 
@@ -25,16 +24,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.Menu;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import lecho.lib.hellocharts.model.Axis;
 import lecho.lib.hellocharts.model.AxisValue;
@@ -47,17 +41,7 @@ import lecho.lib.hellocharts.view.LineChartView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private Button loadButton;
-
-    private Button clearButton;
-
     private TextView totalTextView;
-
-    private ListView expenseListView;
-
-    private ArrayAdapter<String> adapter;
-
-    private ArrayList<String> dataList;
 
     private DatabaseManager dbmanager;
 
@@ -167,58 +151,8 @@ public class MainActivity extends AppCompatActivity
 
     // Chart lib reference: https://github.com/lecho/hellocharts-android
     //
-    // Thank you to Sveta post in Mobindustry:
+    // Thank's to Sveta post in Mobindustry:
     // https://www.mobindustry.net/how-to-quickly-implement-beautiful-charts-in-your-android-app/
-
-    public void initiateChart(String title){
-
-        LineChartView lineChartView;
-
-        String[] xAxisData = getXaxisChartData();
-        int[] yAxisData = getYaxisChartData();
-
-        lineChartView = findViewById(R.id.chart);
-
-        List yAxisValues = new ArrayList();
-        List xAxisValues = new ArrayList();
-
-
-        Line line = new Line(yAxisValues).setColor(Color.parseColor("#9C27B0"));
-
-        for (int i = 0; i < xAxisData.length; i++) {
-            xAxisValues.add(i, new AxisValue(i).setLabel(xAxisData[i]));
-        }
-
-        for (int i = 0; i < yAxisData.length; i++) {
-            yAxisValues.add(new PointValue(i, yAxisData[i]));
-        }
-
-        List lines = new ArrayList();
-        lines.add(line);
-
-        LineChartData data = new LineChartData();
-        data.setLines(lines);
-
-        Axis xAxis = new Axis();
-        xAxis.setValues(xAxisValues);
-        xAxis.setTextSize(16);
-        xAxis.setTextColor(Color.parseColor("#03A9F4"));
-        data.setAxisXBottom(xAxis);
-
-        Axis yAxis = new Axis();
-        yAxis.setName(title);
-        yAxis.setTextColor(Color.parseColor("#03A9F4"));
-        yAxis.setTextSize(16);
-        data.setAxisYLeft(yAxis);
-
-        lineChartView.setLineChartData(data);
-        Viewport viewport = new Viewport(lineChartView.getMaximumViewport());
-        viewport.top = 110;
-        lineChartView.setMaximumViewport(viewport);
-        lineChartView.setCurrentViewport(viewport);
-
-    }
-
     public void initiateNext3MonthsChart(String title){
 
         LineChartView lineChartView;

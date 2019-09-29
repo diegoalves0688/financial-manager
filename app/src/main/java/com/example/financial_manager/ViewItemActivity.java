@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
@@ -15,9 +12,13 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 
 public class ViewItemActivity extends AppCompatActivity {
+
+    private int currentId;
 
     private EditText nameEdtiText;
 
@@ -34,9 +35,7 @@ public class ViewItemActivity extends AppCompatActivity {
     private EditText monthEdtiText;
 
     private EditText yearEdtiText;
-
-    private Button insertButton;
-
+    
     private DatabaseManager dbmanager;
 
     @Override
@@ -65,11 +64,15 @@ public class ViewItemActivity extends AppCompatActivity {
         this.monthEdtiText = findViewById(R.id.ID2_montheditText2);
         this.yearEdtiText = findViewById(R.id.ID2_yeareditText3);
 
-        this.insertButton = findViewById(R.id.ID2_insertbutton);
+        FloatingActionButton saveButton = findViewById(R.id.ID2_savefloatingActionButton);
 
-        checkUpdate(dbmanager);
+        Intent intent = getIntent();
+        String itemId = intent.getStringExtra("itemId");
+        this.currentId = Integer.parseInt(itemId);
 
-        insertButton.setOnClickListener(new View.OnClickListener() {
+        checkUpdate(dbmanager, itemId);
+
+        saveButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
@@ -83,16 +86,16 @@ public class ViewItemActivity extends AppCompatActivity {
                 String month = monthEdtiText.getText().toString();
                 String year = yearEdtiText.getText().toString();
 
-                Expense expense = new Expense(0, name,
+                Expense expense = new Expense(currentId, name,
                         category, Long.valueOf(value),
                         startDate, Long.valueOf(installments),
                         Long.valueOf(installment),
                         Long.valueOf(month),
                         Long.valueOf(year));
 
-                dbmanager.insert(expense);
+                dbmanager.updateItem(expense);
 
-                ShowMessage("Expense inserted: " + name);
+                ShowMessage("Expense updated: " + name);
 
                 Intent intent = new Intent(getBaseContext(), SearchActivity.class);
                 startActivity(intent);
@@ -102,9 +105,8 @@ public class ViewItemActivity extends AppCompatActivity {
 
     }
 
-    public void checkUpdate(DatabaseManager dbmanager){
-        Intent intent = getIntent();
-        String itemId = intent.getStringExtra("itemId");
+    public void checkUpdate(DatabaseManager dbmanager, String itemId){
+
         if(itemId!= null && !itemId.equals("")){
 
             ArrayList<Expense> resultList = dbmanager.search("ID", itemId);

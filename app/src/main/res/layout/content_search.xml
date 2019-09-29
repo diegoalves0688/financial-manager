@@ -11,7 +11,7 @@
     <ListView
         android:id="@+id/ID1_expenseListView"
         android:layout_width="291dp"
-        android:layout_height="400dp"
+        android:layout_height="273dp"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
         android:layout_marginTop="160dp"

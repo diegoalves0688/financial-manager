@@ -300,61 +300,6 @@ public class DatabaseManager extends SQLiteOpenHelper {
 
     }
 
-
-    public long searchByMonthAndYear(ArrayList expenseList, String monthParam, String yearParam){
-
-        long total = 0;
-
-        long paramMonth = parseMonth(monthParam);
-
-        expenseList.clear();
-
-        SQLiteDatabase db = getReadableDatabase();
-
-        Cursor cursor;
-
-        String sql = "SELECT * FROM EXPENSES WHERE MONTH = " + paramMonth +" AND YEAR = " + yearParam + " ORDER BY ID ASC";
-
-        cursor = db.rawQuery(sql, null);
-
-        Boolean next;
-
-        if(cursor == null){
-            return 0;
-        }
-        else{
-
-            next = cursor.moveToFirst();
-
-            while(next){
-
-                int id = cursor.getInt(0);
-                String name = cursor.getString(1);
-                String category = cursor.getString(2);
-                int value = cursor.getInt(3);
-                String startDate = cursor.getString(4);
-                int installments = cursor.getInt(5);
-                int installment = cursor.getInt(6);
-                int month = cursor.getInt(7);
-                int year = cursor.getInt(8);
-
-                Expense expense = new Expense(id, name, category, value, startDate,
-                        installments, installment, month, year);
-
-                total = total + value;
-
-                expenseList.add(expense.toString());
-
-                next = cursor.moveToNext();
-
-            }
-        }
-
-        return total;
-
-    }
-
-
     public ArrayList<Expense> search(String col, String parameter){
 
         ArrayList<Expense> expenseList = new ArrayList<Expense>();
@@ -439,7 +384,19 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 ", YEAR = " + expense.getYear() +
                 " WHERE ID = " + expense.getId();
 
-        db.execSQL(sql);
+        ContentValues cv = new ContentValues();
+        cv.put("NAME",expense.getName());
+        cv.put("CATEGORY",expense.getCategory());
+        cv.put("VALUE",expense.getValue());
+        cv.put("STARTDATE",expense.getStartDate());
+        cv.put("INSTALLMENTS",expense.getInstallments());
+        cv.put("INSTALLMENT",expense.getInstallment());
+        cv.put("MONTH",expense.getMonth());
+        cv.put("YEAR",expense.getYear());
+
+        db.update("EXPENSES", cv, "ID = ?", new String[]{String.valueOf(expense.getId())});
+
+        //db.execSQL(sql);
 
     }
 

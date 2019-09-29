@@ -2,7 +2,6 @@ package com.example.financial_manager;
 
 import android.content.Context;
 import android.content.Intent;
-import android.icu.text.SimpleDateFormat;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -11,14 +10,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.util.Date;
-import java.util.Locale;
 
 public class InsertActivity extends AppCompatActivity {
 
@@ -31,8 +26,6 @@ public class InsertActivity extends AppCompatActivity {
     private EditText startDateEdtiText;
 
     private EditText installmentsEdtiText;
-
-    private Button insertButton;
 
     private DatabaseManager dbmanager;
 
@@ -70,8 +63,6 @@ public class InsertActivity extends AppCompatActivity {
                 String category = categoryEdtiText.getText().toString();
                 String value = valueEdtiText.getText().toString();
                 String startDate = startDateEdtiText.getText().toString();
-
-                //getDate("");
 
                 String installmentsValue = installmentsEdtiText.getText().toString();
                 int installments = Integer.parseInt(installmentsValue);
@@ -115,9 +106,6 @@ public class InsertActivity extends AppCompatActivity {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     public String getDate(String currentDate, String param){
-
-        //String currentDate =
-        //        new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
 
         String[] arrOfStr = currentDate.split("-");
 
