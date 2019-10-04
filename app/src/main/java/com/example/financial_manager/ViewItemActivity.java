@@ -35,7 +35,7 @@ public class ViewItemActivity extends AppCompatActivity {
     private EditText monthEdtiText;
 
     private EditText yearEdtiText;
-    
+
     private DatabaseManager dbmanager;
 
     @Override

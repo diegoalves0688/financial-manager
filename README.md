@@ -2,15 +2,31 @@
 
  A simple Android application to financial management.
 
+    ![MainActivity](img1.png)
+
+    ![MainActivity Menu](img2.png)
+
 # Main Features
 
 ##### Manual expenses input: 
  - Expense name
+ - Expense category
  - Expense installments
  - Expense installment start date
-##### Monthly expenses balance:
- - Shows total to be paid for each expense (Expense view)
- - Shows total to be paid for a selected month (Month view)
+
+    ![New Expense view](img3.png)
+
+##### Search expenses:
+ - Search by expense name: Shows total to be paid for each expense.
+  
+    ![Search by month](img6.png)
+
+ - Search by especific month: Shows total to be paid for a selected month.
+
+    ![Search by month](img5.png)
+
 ##### Send report by email:
- - Total to be paid for each expense
- - Total to be paid for a selected month
+ - Total to be paid for a selected search
+
+    ![Send report by email](img7.png)
+ 
