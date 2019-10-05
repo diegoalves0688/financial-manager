@@ -16,6 +16,8 @@
 
 ##### Send report by email:
  - Total to be paid for a selected search
+ 
+##### Screenshots:
 
 | | | |
 |:-------------------------:|:-------------------------:|:-------------------------:|
